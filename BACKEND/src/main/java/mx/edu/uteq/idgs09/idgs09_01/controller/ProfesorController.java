@@ -1,32 +1,70 @@
+package mx.edu.uteq.idgs09.idgs09_01.controller;
 
-package main.java.mx.edu.uteq.idgs09.idgs09_01.controller;
+import java.util.*;
 
-import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-import java.util.Optional;
-
-import mx.edu.uteq.idgs09.idgs09_01.model.entity.Division;
-import mx.edu.uteq.idgs09.idgs09_01.model.entity.ProgramaEducativo;
-import mx.edu.uteq.idgs09.idgs09_01.model.repository.DivisionRepo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import mx.edu.uteq.idgs09.idgs09_01.model.entity.Profesor;
+import mx.edu.uteq.idgs09.idgs09_01.service.ProfesorService;
 
-
-
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/division")
+@RequestMapping("/api/profesores")
+@CrossOrigin(origins = "*")
 public class ProfesorController {
-    
+
+    private final ProfesorService service;
+
+    @Autowired
+    public ProfesorController(ProfesorService service) {
+        this.service = service;
+    }
+
+    // ✅ GET: Obtener todos los profesores
+    @GetMapping
+    public List<Profesor> getAllProfesores() {
+        return service.findAll();
+    }
+
+    // ✅ POST: Crear un nuevo profesor
+    @PostMapping
+    public ResponseEntity<?> crear(@RequestBody Profesor p) {
+        try {
+            return ResponseEntity.ok(service.crear(p));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // ✅ GET: Obtener un profesor por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Profesor> getProfesorById(@PathVariable int id) {
+        Optional<Profesor> profesor = service.findById(id);
+        return profesor.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // ✅ PUT: Editar un profesor
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable int id, @RequestBody Profesor p) {
+        try {
+            return ResponseEntity.ok(service.actualizar(id, p));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // ✅ DELETE: Eliminar un profesor
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProfesor(@PathVariable int id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

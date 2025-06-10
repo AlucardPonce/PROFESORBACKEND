@@ -19,9 +19,7 @@ public class Profesor {
     private int id;
     private String nombre;
     private String apellidos;
+    private String genero;
+    private String clave_pe; //Clave Programa Educativo
     private boolean activo;
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "division")
-    // @JoinColumn(name = "id_division")
-    private List<ProgramaEducativo> programasEducativos;
-    
 }
