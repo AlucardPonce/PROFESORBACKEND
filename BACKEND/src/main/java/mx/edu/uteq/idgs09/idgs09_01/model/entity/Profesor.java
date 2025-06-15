@@ -20,6 +20,6 @@ public class Profesor {
     private String nombre;
     private String apellidos;
     private String genero;
-    private String clave_pe; //Clave Programa Educativo
+    private String id_pe; //Clave Programa Educativo
     private boolean activo;
 }

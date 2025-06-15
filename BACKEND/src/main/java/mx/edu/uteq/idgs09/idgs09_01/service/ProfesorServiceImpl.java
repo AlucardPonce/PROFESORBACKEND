@@ -28,7 +28,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Override
     public Profesor crear(Profesor profesor) {
         // Validar que la clave del programa educativo exista
-        if (!programaEducativoClient.existsByClave(profesor.getClave_pe())) {
+        if (!programaEducativoClient.existsByClave(profesor.getId_pe())) {
             throw new IllegalArgumentException("La clave del programa educativo no existe.");
         }
         return profesorRepository.save(profesor);
@@ -40,7 +40,7 @@ public class ProfesorServiceImpl implements ProfesorService {
             throw new NoSuchElementException("No existe el profesor con ID: " + id);
         }
         // Validar que la clave del programa educativo exista
-        if (!programaEducativoClient.existsByClave(profesor.getClave_pe())) {
+        if (!programaEducativoClient.existsByClave(profesor.getId_pe())) {
             throw new IllegalArgumentException("La clave del programa educativo no existe.");
         }
         profesor.setId(id); // Asegurar que se está actualizando el registro correcto
