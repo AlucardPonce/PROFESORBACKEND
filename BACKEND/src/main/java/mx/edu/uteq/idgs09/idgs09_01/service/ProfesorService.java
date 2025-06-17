@@ -4,6 +4,7 @@ package mx.edu.uteq.idgs09.idgs09_01.service;
 import java.util.List;
 import java.util.Optional;
 
+import mx.edu.uteq.idgs09.idgs09_01.dto.ProfesorDTO;
 import mx.edu.uteq.idgs09.idgs09_01.model.entity.Profesor;
 
 public interface ProfesorService {
@@ -11,6 +12,8 @@ public interface ProfesorService {
     List<Profesor> findAll();
 
     Optional<Profesor> findById(int id);
+
+    Optional<ProfesorDTO> findDTOById(int id);
 
     Profesor crear(Profesor profesor);
 
