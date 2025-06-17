@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import mx.edu.uteq.idgs09.idgs09_01.dto.ProfesorDTO;
+import mx.edu.uteq.idgs09.idgs09_01.dto.ProgramaEducativoDTO;
 import mx.edu.uteq.idgs09.idgs09_01.model.entity.Profesor;
 
 public interface ProfesorService {
@@ -20,4 +21,6 @@ public interface ProfesorService {
     Profesor actualizar(int id, Profesor profesor);
 
     void deleteById(int id);
+
+    ProgramaEducativoDTO getProgramaEducativoDTO(String clavePE);
 }

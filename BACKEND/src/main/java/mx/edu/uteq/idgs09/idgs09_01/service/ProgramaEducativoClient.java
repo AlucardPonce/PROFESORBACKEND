@@ -18,8 +18,13 @@ public class ProgramaEducativoClient {
         try {
             String url = "http://localhost:8080/api/pe/clave/" + clavePE;
             ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class);
+            System.out.println("Validando clave PE: " + clavePE + " - Status: " + response.getStatusCode());
             return response.getStatusCode().is2xxSuccessful();
         } catch (HttpClientErrorException.NotFound ex) {
+            System.out.println("Clave PE NO encontrada: " + clavePE);
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error al validar clave PE: " + clavePE + " - " + e.getMessage());
             return false;
         }
     }
