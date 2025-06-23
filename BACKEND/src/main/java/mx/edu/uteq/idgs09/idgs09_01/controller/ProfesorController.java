@@ -10,6 +10,10 @@ import mx.edu.uteq.idgs09.idgs09_01.dto.ProgramaEducativoDTO;
 import mx.edu.uteq.idgs09.idgs09_01.dto.ProfesorDTO;
 import mx.edu.uteq.idgs09.idgs09_01.model.entity.Profesor;
 import mx.edu.uteq.idgs09.idgs09_01.service.ProfesorService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/api/profesores")
@@ -110,6 +114,17 @@ public class ProfesorController {
         try {
             service.deleteById(id);
             return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/editarpro/{id}")
+    public ResponseEntity<?> editarPro(@PathVariable int id, @RequestBody Profesor p) {
+        try {
+            return ResponseEntity.ok(service.actualizar(id, p));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
