@@ -10,14 +10,11 @@ import mx.edu.uteq.idgs09.idgs09_01.dto.ProgramaEducativoDTO;
 import mx.edu.uteq.idgs09.idgs09_01.dto.ProfesorDTO;
 import mx.edu.uteq.idgs09.idgs09_01.model.entity.Profesor;
 import mx.edu.uteq.idgs09.idgs09_01.service.ProfesorService;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/profesores")
-@CrossOrigin(origins = "*")
 public class ProfesorController {
 
     private final ProfesorService service;
